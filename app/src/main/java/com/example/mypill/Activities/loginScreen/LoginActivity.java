@@ -1,6 +1,7 @@
 package com.example.mypill.Activities.loginScreen;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Handler;
@@ -10,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.mypill.Activities.MainActivity;
+import com.example.mypill.Activities.mainScreen.MainActivity;
 import com.example.mypill.R;
 
 import java.util.concurrent.CompletableFuture;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private Intent mainActivityIntent;
 
     private LoginController loginController;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -47,6 +49,11 @@ public class LoginActivity extends AppCompatActivity {
         mainActivityIntent = new Intent(this, MainActivity.class);
 
         loginController = new LoginController();
+
+        prefs = getSharedPreferences("mySharedPrefs", MODE_PRIVATE);
+        if (prefs.getBoolean("loggedIn", false)) {
+            startActivity(mainActivityIntent);
+        }
 
         signInButton.setOnClickListener(new View.OnClickListener() {
 
@@ -87,8 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("LoginActivity", e.getMessage());
                 }
-            }
-            });
+            }});
     }
 
     @Override
