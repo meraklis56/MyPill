@@ -1,7 +1,9 @@
-package com.example.mypill;
+package com.example.mypill.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.mypill.R;
 
 public class MainActivity extends AppCompatActivity {
 
