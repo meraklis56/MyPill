@@ -17,6 +17,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".Activities.utils.MyBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+        <service
+            android:name=".Activities.utils.CreateNotificationIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false" >
+        </service>
+        <service
+            android:name=".Activities.utils.ActionsIntentService">
+        </service>
     </application>
 
 </manifest>

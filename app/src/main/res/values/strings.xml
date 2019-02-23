@@ -3,4 +3,10 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="signIn">Sign-in</string>
+    <string name="setAlarm">Set Alarm</string>
+    <string name="cancelAlarm">Cancel Alarm</string>
+    <string name="tookPill">Done</string>
+    <string name="snooze">Snooze 30 min</string>
+    <string name="notificationTitle">It\'s time</string>
+    <string name="notificationText">Take your drug</string>
 </resources>
