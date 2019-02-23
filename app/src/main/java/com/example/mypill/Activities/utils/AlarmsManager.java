@@ -38,6 +38,7 @@ public class AlarmsManager {
             Log.e("AlarmsManager", e.getMessage());
             return false;
         }
+        // TODO make the alarm be set automatically on each reboot
     }
 
     public boolean cancelAlarm() {

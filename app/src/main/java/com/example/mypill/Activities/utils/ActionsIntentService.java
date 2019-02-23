@@ -22,9 +22,9 @@ public class ActionsIntentService extends IntentService {
         mNotificationManager.cancelAll();
 
         if (intent.hasExtra("action")) {
-            if (intent.getStringExtra("action") == "tookPill") {
+            if (intent.getStringExtra("action").equals("tookPill")) {
                 IntakePill();
-            } else if (intent.getStringExtra("action") == "snooze") {
+            } else if (intent.getStringExtra("action").equals("snooze")) {
                 SnoozeAction();
             }
         }

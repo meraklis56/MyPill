@@ -36,11 +36,11 @@ public class CreateNotificationIntentService extends JobIntentService {
         // Create the two intents for our actions
         Intent tookPillIntent = new Intent(context, ActionsIntentService.class);
         tookPillIntent.putExtra("action", "tookPill");
-        PendingIntent pendingIntent = PendingIntent.getService(context, 3, tookPillIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent tookPillPendingIntent = PendingIntent.getService(context, 3, tookPillIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent snoozeIntent = new Intent(context, ActionsIntentService.class);
         snoozeIntent.putExtra("action", "snooze");
-        PendingIntent snoozePendingIntent = PendingIntent.getService(context, 3, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent snoozePendingIntent = PendingIntent.getService(context, 4, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Build Notification with NotificationCompat.Builder
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -48,11 +48,12 @@ public class CreateNotificationIntentService extends JobIntentService {
                 .setContentText(getString(R.string.notificationText))    //Set the text for notification
                 .setSmallIcon(R.drawable.mainlogo)   //Set the icon
                 .setColorized(true)
-                .addAction(android.R.drawable.ic_menu_view, getString(R.string.tookPill), pendingIntent)
-                .addAction(android.R.drawable.ic_menu_view, getString(R.string.snooze), pendingIntent)
+                .addAction(android.R.drawable.ic_menu_view, getString(R.string.tookPill), tookPillPendingIntent)
+                .addAction(android.R.drawable.ic_menu_view, getString(R.string.snooze), snoozePendingIntent)
                 .setAutoCancel(true)
                 .build();
         // TODO create different text and titles and randomize them
+        // TODO add proper icons for each action
 
         //Send the notification.
         mNotificationManager.notify(1, notification);
