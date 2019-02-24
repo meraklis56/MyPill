@@ -3,6 +3,10 @@ package com.example.mypill.Activities.utils;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Handler;
+import android.widget.Toast;
+
+import com.example.mypill.R;
 
 /*
     This is the class responsible to handle user's clicks on the two main buttons
@@ -11,8 +15,10 @@ import android.content.Intent;
 
 public class ActionsIntentService extends IntentService {
 
+    private Handler mHandler;
     public ActionsIntentService() {
         super("ActionsIntentService");
+        mHandler = new Handler();
     }
 
     @Override
@@ -32,6 +38,14 @@ public class ActionsIntentService extends IntentService {
 
     private void SnoozeAction() {
         System.out.println("Snooze action");
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), (String)getString(R.string.snoozeToast),
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
     private void IntakePill() {

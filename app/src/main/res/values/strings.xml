@@ -9,4 +9,5 @@
     <string name="snooze">Snooze 30 min</string>
     <string name="notificationTitle">It\'s time</string>
     <string name="notificationText">Take your drug</string>
+    <string name="snoozeToast">Snoozed for 30 min</string>
 </resources>

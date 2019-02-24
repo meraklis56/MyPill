@@ -51,6 +51,7 @@ public class CreateNotificationIntentService extends JobIntentService {
                 .addAction(android.R.drawable.ic_menu_view, getString(R.string.tookPill), tookPillPendingIntent)
                 .addAction(android.R.drawable.ic_menu_view, getString(R.string.snooze), snoozePendingIntent)
                 .setAutoCancel(true)
+                .setDeleteIntent(snoozePendingIntent)
                 .build();
         // TODO create different text and titles and randomize them
         // TODO add proper icons for each action
