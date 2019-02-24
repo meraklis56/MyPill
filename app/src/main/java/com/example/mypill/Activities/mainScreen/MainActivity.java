@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                System.out.println(alarmsManager.setAlarm());
+                System.out.println(alarmsManager.setMainAlarm());
             }});
 
         cancelAlarmButton.setOnClickListener(new View.OnClickListener() {

@@ -8,13 +8,14 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     /*
     This class is responsible to receive the intent from AlarmsManager Service
+    and pass it to CreateNotificationIntentService
     */
 
     public MyBroadcastReceiver() { }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("BroadcastReceiver");
-        CreateNotificationIntentService.enqueueWork(context, new Intent());
+        System.out.println("MyBroadcastReceiver: " + intent.hasExtra("NOTIFICATION"));
+        CreateNotificationIntentService.enqueueWork(context, intent);
     }
 }

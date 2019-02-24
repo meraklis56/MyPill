@@ -10,7 +10,7 @@ import android.util.Log;
     so the alarm to continuing firing at the specific time
 */
 
-public class RestartAlarmsManager extends BroadcastReceiver {
+public class RestartAlarmsManagerReceiver extends BroadcastReceiver {
     private AlarmsManager alarmsManager;
 
     @Override
@@ -20,7 +20,7 @@ public class RestartAlarmsManager extends BroadcastReceiver {
             Log.i("RestartAlarmManager", "Restart intent received. Setting the alarm");
 
             alarmsManager = new AlarmsManager();
-            alarmsManager.setAlarm();
+            alarmsManager.setMainAlarm();
         } else {
             Log.e("RestartAlarmManager", "Received unexpected intent " + intent.toString());
         }

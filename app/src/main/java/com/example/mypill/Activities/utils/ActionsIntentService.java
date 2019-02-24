@@ -15,9 +15,12 @@ import com.example.mypill.R;
 
 public class ActionsIntentService extends IntentService {
 
+    private AlarmsManager alarmsManager;
     private Handler mHandler;
+
     public ActionsIntentService() {
         super("ActionsIntentService");
+        alarmsManager = new AlarmsManager();
         mHandler = new Handler();
     }
 
@@ -27,10 +30,10 @@ public class ActionsIntentService extends IntentService {
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotificationManager.cancelAll();
 
-        if (intent.hasExtra("action")) {
-            if (intent.getStringExtra("action").equals("tookPill")) {
+        if (intent.hasExtra("ACTION")) {
+            if (intent.getStringExtra("ACTION").equals("TAKEPILL")) {
                 IntakePill();
-            } else if (intent.getStringExtra("action").equals("snooze")) {
+            } else if (intent.getStringExtra("ACTION").equals("SNOOZE")) {
                 SnoozeAction();
             }
         }
@@ -41,14 +44,21 @@ public class ActionsIntentService extends IntentService {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), (String)getString(R.string.snoozeToast),
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), (String)getString(R.string.snoozeToast), Toast.LENGTH_LONG).show();
+                alarmsManager.setSecondaryAlarm("SNOOZE_MAIN_NOTIFICATION");
             }
         });
-
     }
 
     private void IntakePill() {
         System.out.println("Pill intaken");
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), (String)getString(R.string.pillTaken), Toast.LENGTH_LONG).show();
+                // TODO notify DB
+                alarmsManager.setSecondaryAlarm("ACTION_PILL_INTAKEN");
+            }
+        });
     }
 }

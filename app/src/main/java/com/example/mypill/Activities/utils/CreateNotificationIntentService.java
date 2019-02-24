@@ -13,7 +13,9 @@ import android.support.v4.app.NotificationCompat;
 import com.example.mypill.R;
 
 /*
-    This class is responsible to create the notification
+    This class is responsible to create the two types of notification:
+    1. Main Notification (Reminder to take your pill with 2 actions)
+    2. Secondary Notification (Reminder that you can eat anything)
 */
 
 public class CreateNotificationIntentService extends JobIntentService {
@@ -33,13 +35,30 @@ public class CreateNotificationIntentService extends JobIntentService {
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         createNotificationChannel(mNotificationManager);
 
+        System.out.println(intent.hasExtra("NOTIFICATION"));
+        if (intent.hasExtra("NOTIFICATION")) {
+            if (intent.getStringExtra("NOTIFICATION").equals("MAIN")) {
+                createMainNotification();
+            } else if (intent.getStringExtra("NOTIFICATION").equals("SECONDARY")) {
+                createSecondaryNotification();
+            }
+        } else {
+            createMainNotification();
+        }
+        // There is a bug here. Whenever a new alarm is set, for some reason
+        // the intent.getExtra("NOTIFICATION") is not set
+
+        System.out.println("IntentReceiver");
+    }
+
+    public void createMainNotification() {
         // Create the two intents for our actions
         Intent tookPillIntent = new Intent(context, ActionsIntentService.class);
-        tookPillIntent.putExtra("action", "tookPill");
+        tookPillIntent.putExtra("ACTION", "TAKEPILL");
         PendingIntent tookPillPendingIntent = PendingIntent.getService(context, 3, tookPillIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent snoozeIntent = new Intent(context, ActionsIntentService.class);
-        snoozeIntent.putExtra("action", "snooze");
+        snoozeIntent.putExtra("ACTION", "SNOOZE");
         PendingIntent snoozePendingIntent = PendingIntent.getService(context, 4, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Build Notification with NotificationCompat.Builder
@@ -48,18 +67,29 @@ public class CreateNotificationIntentService extends JobIntentService {
                 .setContentText(getString(R.string.notificationText))    //Set the text for notification
                 .setSmallIcon(R.drawable.mainlogo)   //Set the icon
                 .setColorized(true)
-                .addAction(android.R.drawable.ic_menu_view, getString(R.string.tookPill), tookPillPendingIntent)
-                .addAction(android.R.drawable.ic_menu_view, getString(R.string.snooze), snoozePendingIntent)
+                .addAction(R.drawable.check, getString(R.string.tookPill), tookPillPendingIntent)
+                .addAction(R.drawable.check, getString(R.string.snooze), snoozePendingIntent)
                 .setAutoCancel(true)
                 .setDeleteIntent(snoozePendingIntent)
                 .build();
         // TODO create different text and titles and randomize them
-        // TODO add proper icons for each action
 
-        //Send the notification.
+        // Show the notification.
         mNotificationManager.notify(1, notification);
+    }
 
-        System.out.println("IntentReceiver");
+    public void createSecondaryNotification() {
+        // Build Notification with NotificationCompat.Builder
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(R.string.pillDigestedNotificationTitle))   //Set the title of Notification
+                .setContentText(getString(R.string.pillDigestedNotificationText))    //Set the text for notification
+                .setSmallIcon(R.drawable.mainlogo) //Set the icon
+                .setColorized(true)
+                .setAutoCancel(true)
+                .build();
+
+        // Show the notification.
+        mNotificationManager.notify(1, notification);
     }
 
     // This is needed only if API Level >= 26 (OREO)
