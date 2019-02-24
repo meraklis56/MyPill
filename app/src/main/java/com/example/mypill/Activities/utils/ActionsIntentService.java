@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.example.mypill.Activities.data.DataHandler;
 import com.example.mypill.R;
 
 /*
@@ -17,11 +18,13 @@ public class ActionsIntentService extends IntentService {
 
     private AlarmsManager alarmsManager;
     private Handler mHandler;
+    private DataHandler dataHandler;
 
     public ActionsIntentService() {
         super("ActionsIntentService");
         alarmsManager = new AlarmsManager();
         mHandler = new Handler();
+        dataHandler = new DataHandler();
     }
 
     @Override
@@ -47,6 +50,7 @@ public class ActionsIntentService extends IntentService {
             @Override
             public void run() {
                 Toast.makeText(getApplicationContext(), (String)getString(R.string.snoozeToast), Toast.LENGTH_LONG).show();
+                dataHandler.saveEntry(0, "snooze");
                 alarmsManager.setSecondaryAlarm("SNOOZE_MAIN_NOTIFICATION");
             }
         });
@@ -58,7 +62,7 @@ public class ActionsIntentService extends IntentService {
             @Override
             public void run() {
                 Toast.makeText(getApplicationContext(), (String)getString(R.string.pillTaken), Toast.LENGTH_LONG).show();
-                // TODO notify DB
+                dataHandler.saveEntry(0, "taken");
                 alarmsManager.setSecondaryAlarm("ACTION_PILL_INTAKEN");
             }
         });
@@ -70,7 +74,7 @@ public class ActionsIntentService extends IntentService {
             @Override
             public void run() {
                 Toast.makeText(getApplicationContext(), (String)getString(R.string.pillForgoten), Toast.LENGTH_LONG).show();
-                // TODO notify DB
+                dataHandler.saveEntry(0, "forgotten");
             }
         });
     }
