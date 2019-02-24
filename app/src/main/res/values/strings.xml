@@ -6,11 +6,13 @@
     <string name="setAlarm">Set Alarm</string>
     <string name="cancelAlarm">Cancel Alarm</string>
     <string name="tookPill">Done</string>
+    <string name="forgotPill">I Forgot it</string>
     <string name="snooze">Snooze 30 min</string>
     <string name="notificationTitle">It\'s time</string>
     <string name="notificationText">Take your drug</string>
     <string name="snoozeToast">Snoozed for 30 min</string>
     <string name="pillTaken">You will be notified in 30 minutes</string>
+    <string name="pillForgoten">Shame!!</string>
     <string name="pillDigestedNotificationTitle">Your pill is digested</string>
     <string name="pillDigestedNotificationText">Lady, you can eat anything you want 🍞</string>
 </resources>

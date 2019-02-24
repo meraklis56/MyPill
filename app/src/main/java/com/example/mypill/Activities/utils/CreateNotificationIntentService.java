@@ -61,6 +61,10 @@ public class CreateNotificationIntentService extends JobIntentService {
         snoozeIntent.putExtra("ACTION", "SNOOZE");
         PendingIntent snoozePendingIntent = PendingIntent.getService(context, 4, snoozeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent forgetIntent = new Intent(context, ActionsIntentService.class);
+        forgetIntent.putExtra("ACTION", "FORGET");
+        PendingIntent forgetPendingIntent = PendingIntent.getService(context, 5, forgetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         // Build Notification with NotificationCompat.Builder
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.notificationTitle))   //Set the title of Notification
@@ -69,6 +73,7 @@ public class CreateNotificationIntentService extends JobIntentService {
                 .setColorized(true)
                 .addAction(R.drawable.check, getString(R.string.tookPill), tookPillPendingIntent)
                 .addAction(R.drawable.check, getString(R.string.snooze), snoozePendingIntent)
+                .addAction(R.drawable.check, getString(R.string.forgotPill), forgetPendingIntent)
                 .setAutoCancel(true)
                 .setDeleteIntent(snoozePendingIntent)
                 .build();

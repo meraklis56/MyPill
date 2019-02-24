@@ -35,6 +35,8 @@ public class ActionsIntentService extends IntentService {
                 IntakePill();
             } else if (intent.getStringExtra("ACTION").equals("SNOOZE")) {
                 SnoozeAction();
+            } else if (intent.getStringExtra("ACTION").equals("FORGET")) {
+                ForgetPill();
             }
         }
     }
@@ -58,6 +60,17 @@ public class ActionsIntentService extends IntentService {
                 Toast.makeText(getApplicationContext(), (String)getString(R.string.pillTaken), Toast.LENGTH_LONG).show();
                 // TODO notify DB
                 alarmsManager.setSecondaryAlarm("ACTION_PILL_INTAKEN");
+            }
+        });
+    }
+
+    private void ForgetPill() {
+        System.out.println("Pill was forgotten");
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), (String)getString(R.string.pillForgoten), Toast.LENGTH_LONG).show();
+                // TODO notify DB
             }
         });
     }
