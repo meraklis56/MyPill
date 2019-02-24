@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.example.mypill.Activities.utils.AlarmsManager;
 import com.example.mypill.R;
+import com.google.firebase.FirebaseApp;
 
 /*
     This class, when it is executed for the first time, it is responsible

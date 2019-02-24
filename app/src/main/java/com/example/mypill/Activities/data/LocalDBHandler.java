@@ -1,16 +1,20 @@
 package com.example.mypill.Activities.data;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.example.mypill.Activities.interfaces.DBHandlerInterface;
 
 /*
     This class is responsible to save and manage data locally
     using SQLite
 */
-public class LocalDBHandler extends SQLiteOpenHelper {
+public class LocalDBHandler extends SQLiteOpenHelper implements DBHandlerInterface {
 
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "ActionEntries.db";
@@ -48,5 +52,28 @@ public class LocalDBHandler extends SQLiteOpenHelper {
         // to simply to discard the data and start over
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
+    }
+
+    public boolean addEntry(int pillID, String action, String time) {
+        try {
+            // Gets the data repository in write mode
+            SQLiteDatabase db = getWritableDatabase();
+
+            // Create a new map of values, where column names are the keys
+            ContentValues values = new ContentValues();
+            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_PILL_ID, pillID);
+            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_ACTION, action);
+            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_TIME, time);
+
+            long newRowID = db.insert(LocalDBHandler.FeedEntry.TABLE_NAME, null, values);
+            if (newRowID > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            Log.e("SQLite", e.getMessage());
+            return false;
+        }
     }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.mypill.Activities.mainScreen.MainActivity;
 import com.example.mypill.R;
+import com.google.firebase.FirebaseApp;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         // Login components initialization
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
