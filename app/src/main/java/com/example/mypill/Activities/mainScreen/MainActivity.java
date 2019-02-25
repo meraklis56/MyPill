@@ -1,13 +1,13 @@
 package com.example.mypill.Activities.mainScreen;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
+import com.example.mypill.Activities.data.DataHandler;
 import com.example.mypill.Activities.utils.AlarmsManager;
 import com.example.mypill.R;
-import com.google.firebase.FirebaseApp;
 
 /*
     This class, when it is executed for the first time, it is responsible
@@ -28,22 +28,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         alarmsManager = new AlarmsManager();
+        alarmsManager.setMainAlarm();
+        // Always set alarm.
 
-        setAlarmButton = (Button) findViewById(R.id.setAlarmButton);
-        cancelAlarmButton = (Button) findViewById(R.id.cancelAlarmButton);
+        new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        new DataHandler().getEntries(5).forEach(entry -> {
+//                            System.out.println(entry.toString());
+                        });
+                    }
+                });
 
-        setAlarmButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                System.out.println(alarmsManager.setMainAlarm());
-            }});
-
-        cancelAlarmButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                System.out.println(alarmsManager.cancelAlarm());
-            }});
+        // TODO implement tab view
+        // TODO implement fragments
     }
 }

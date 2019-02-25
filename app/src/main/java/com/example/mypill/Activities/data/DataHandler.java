@@ -20,6 +20,7 @@ import android.icu.text.SimpleDateFormat;
 
 import com.example.mypill.Activities.utils.GlobalApplication;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DataHandler {
@@ -37,19 +38,22 @@ public class DataHandler {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
         String currentTime = sdf.format(new Date());
 
-        saveEntryLocally(pillID, action, currentTime);
-
-        saveEntryRemotely(pillID, action, currentTime);
+        saveEntryLocally(new Entry(pillID, action, currentTime));
+        saveEntryRemotely(new Entry(pillID, action, currentTime));
 
         // For 100% accurate synchronization between the databases
-        // If one fails, then the other one must be undone
+        // If one fails, then the other one must be cancelled/undone
     }
 
-    private void saveEntryLocally(int pillID, String action, String time) {
-        localDB.addEntry(pillID, action, time);
+    private void saveEntryLocally(Entry entry) {
+        localDB.addEntry(entry);
     }
 
-    private void saveEntryRemotely(int pillID, String action, String time) {
-        cloudDB.addEntry(pillID, action, time);
+    private void saveEntryRemotely(Entry entry) {
+        cloudDB.addEntry(entry);
+    }
+
+    public ArrayList<Entry> getEntries(int limitter) {
+        return localDB.getEntries(limitter);
     }
 }

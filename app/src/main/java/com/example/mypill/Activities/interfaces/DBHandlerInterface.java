@@ -9,7 +9,12 @@ package com.example.mypill.Activities.interfaces;
     behaviour must be defined here
 */
 
+import com.example.mypill.Activities.data.Entry;
+
+import java.util.ArrayList;
+
 public interface DBHandlerInterface {
 
-    public boolean addEntry(int pillID, String action, String time);
+    public boolean addEntry(Entry entry);
+    public ArrayList<Entry> getEntries(int limiter);
 }

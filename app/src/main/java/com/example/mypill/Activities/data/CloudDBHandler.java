@@ -6,11 +6,16 @@ import android.util.Log;
 import com.example.mypill.Activities.interfaces.DBHandlerInterface;
 import com.example.mypill.Activities.utils.JSONUtils;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.example.mypill.Activities.utils.GlobalApplication;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /*
     This class is responsible to save entries to Firebase
@@ -32,16 +37,16 @@ public class CloudDBHandler implements DBHandlerInterface {
         database = FirebaseDatabase.getInstance();
     }
 
-    public boolean addEntry(int pillID, String action, String time) {
+    public boolean addEntry(Entry entry) {
         // push() is used so every new addition of data, to be stored under
         // a unique ID and not replace the previous values
-        myRef = database.getReference("/Actions/" + time.split(" ")[1]).push();
+        myRef = database.getReference("/Actions/" + entry.getTime().split(" ")[1]).push();
 
         JSONObject entryJSON = new JSONObject();
         try {
-            entryJSON.put("pillID", pillID);
-            entryJSON.put("action", action);
-            entryJSON.put("time", time.split(" ")[0]);
+            entryJSON.put("pillID", entry.getPillID());
+            entryJSON.put("action", entry.getAction());
+            entryJSON.put("time", entry.getTime().split(" ")[0]);
 
             myRef.setValue(JSONUtils.jsonToMap(entryJSON));
             Log.i("FirebaseSDK", "entry has been saved");
@@ -50,6 +55,29 @@ public class CloudDBHandler implements DBHandlerInterface {
             Log.e("FirebaseSDK", e.getMessage());
             return false;
         }
+    }
+
+    public ArrayList<Entry> getEntries(int limiter) {
+        myRef = database.getReference("/Actions");
+        myRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                    dataSnapshot.getChildren().forEach(entry -> {
+                        entry.getChildren().forEach(field -> {
+                            String input = field.getValue().toString();
+                            // TODO parse it
+                        });
+                    });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        //TODO implement
+        return null;
     }
 
 }

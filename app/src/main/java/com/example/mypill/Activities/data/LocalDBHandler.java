@@ -2,6 +2,7 @@ package com.example.mypill.Activities.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
@@ -9,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.mypill.Activities.interfaces.DBHandlerInterface;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
     This class is responsible to save and manage data locally
@@ -54,16 +58,16 @@ public class LocalDBHandler extends SQLiteOpenHelper implements DBHandlerInterfa
         onCreate(db);
     }
 
-    public boolean addEntry(int pillID, String action, String time) {
+    public boolean addEntry(Entry entry) {
         try {
             // Gets the data repository in write mode
             SQLiteDatabase db = getWritableDatabase();
 
             // Create a new map of values, where column names are the keys
             ContentValues values = new ContentValues();
-            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_PILL_ID, pillID);
-            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_ACTION, action);
-            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_TIME, time);
+            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_PILL_ID, entry.getPillID());
+            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_ACTION, entry.getAction());
+            values.put(LocalDBHandler.FeedEntry.COLUMN_NAME_TIME, entry.getTime());
 
             long newRowID = db.insert(LocalDBHandler.FeedEntry.TABLE_NAME, null, values);
             if (newRowID > -1) {
@@ -75,5 +79,23 @@ public class LocalDBHandler extends SQLiteOpenHelper implements DBHandlerInterfa
             Log.e("SQLite", e.getMessage());
             return false;
         }
+    }
+
+    public ArrayList<Entry> getEntries(int limiter) {
+        ArrayList<Entry> entries = new ArrayList<Entry>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM entries order by _id desc limit " + limiter;
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        while (cursor.moveToNext()) {
+            int id = Integer.parseInt(cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_PILL_ID)));
+            String action = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_ACTION));
+            String time = cursor.getString(cursor.getColumnIndexOrThrow(FeedEntry.COLUMN_NAME_TIME));
+            entries.add(new Entry(id, action, time));
+        }
+
+        return entries;
     }
 }
