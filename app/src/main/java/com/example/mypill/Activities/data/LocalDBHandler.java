@@ -6,13 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.mypill.Activities.interfaces.DBHandlerInterface;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /*
     This class is responsible to save and manage data locally

@@ -7,10 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v4.app.JobIntentService;
-import android.support.v4.app.NotificationCompat;
 
 import com.example.mypill.R;
+
+import androidx.core.app.JobIntentService;
+import androidx.core.app.NotificationCompat;
 
 /*
     This class is responsible to create the two types of notification:
@@ -66,11 +67,10 @@ public class CreateNotificationIntentService extends JobIntentService {
         PendingIntent forgetPendingIntent = PendingIntent.getService(context, 5, forgetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Build Notification with NotificationCompat.Builder
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        Notification notification = new Notification.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.notificationTitle))   //Set the title of Notification
                 .setContentText(getString(R.string.notificationText))    //Set the text for notification
-                .setSmallIcon(R.drawable.mainlogo)   //Set the icon
-                .setColorized(true)
+                .setSmallIcon(R.drawable.notification_logo)   //Set the icon
                 .addAction(R.drawable.check, getString(R.string.tookPill), tookPillPendingIntent)
                 .addAction(R.drawable.check, getString(R.string.snooze), snoozePendingIntent)
                 .addAction(R.drawable.check, getString(R.string.forgotPill), forgetPendingIntent)
@@ -84,11 +84,12 @@ public class CreateNotificationIntentService extends JobIntentService {
     }
 
     public void createSecondaryNotification() {
+
         // Build Notification with NotificationCompat.Builder
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.pillDigestedNotificationTitle))   //Set the title of Notification
                 .setContentText(getString(R.string.pillDigestedNotificationText))    //Set the text for notification
-                .setSmallIcon(R.drawable.mainlogo) //Set the icon
+                .setSmallIcon(R.drawable.notification_logo) //Set the icon
                 .setColorized(true)
                 .setAutoCancel(true)
                 .build();

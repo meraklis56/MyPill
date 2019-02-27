@@ -15,4 +15,6 @@
     <string name="pillForgoten">Shame!!</string>
     <string name="pillDigestedNotificationTitle">Your pill is digested</string>
     <string name="pillDigestedNotificationText">Lady, you can eat anything you want 🍞</string>
+    <string name="logOutToast">You \'ve been logged out</string>
+    <string name="logout">Log out</string>
 </resources>

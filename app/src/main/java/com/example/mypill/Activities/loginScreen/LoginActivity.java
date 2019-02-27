@@ -1,22 +1,24 @@
 package com.example.mypill.Activities.loginScreen;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.mypill.Activities.mainScreen.MainActivity;
 import com.example.mypill.R;
-import com.google.firebase.FirebaseApp;
 
 import java.util.concurrent.CompletableFuture;
 
+import androidx.appcompat.app.AppCompatActivity;
 import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
 
 /*
@@ -35,11 +37,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginController loginController;
     private SharedPreferences prefs;
+    private LottieAnimationView animationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
 
         // Login components initialization
@@ -56,6 +60,32 @@ public class LoginActivity extends AppCompatActivity {
         if (prefs.getBoolean("loggedIn", false)) {
             startActivity(mainActivityIntent);
         }
+
+        // The animation was created using After Effects and the
+        // Loftie, a library which enables the export of animation from AE
+        // into a json file and then animating natively in Android
+        animationView = (LottieAnimationView) findViewById(R.id.logoHolder);
+
+        animationView.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                animationView.setMinFrame(180);
+                // set the animation to start from the 3rd second - [60fps]
+            }
+        });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
 
@@ -83,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                                     public void run() {
                                         startActivity(mainActivityIntent);
                                     }
-                                }, 500);
+                                }, 1000);
                             }
                         }, 1000);
                     } else {
