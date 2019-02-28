@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.example.mypill.Activities.utils.GlobalApplication;
 import com.example.mypill.R;
 
+import java.util.Arrays;
+
 /*
     This is the class which is responsible to confirm if the credentials are
     correct or now. It communicates with the back-end server to validate them.
@@ -29,12 +31,14 @@ public class LoginController {
         char[] expectedUsername = context.getResources().getString(R.string.usernameLogin).toCharArray();
         char[] expectedPassword = context.getResources().getString(R.string.passwordLogin).toCharArray();
 
-        // Save the logged status into SharedPreferences
-        editor = context.getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE).edit();
-        editor.putBoolean("loggedIn", true);
-        editor.apply();
-
-//        return Arrays.equals(username, expectedUsername) && Arrays.equals(password, expectedPassword);
-        return true;
+        if (Arrays.equals(username, expectedUsername) && Arrays.equals(password, expectedPassword)) {
+            // Save the logged status into SharedPreferences
+            editor = context.getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE).edit();
+            editor.putBoolean("loggedIn", true);
+            editor.apply();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -68,14 +68,16 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                 android:id="@+id/signInButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="16dp"
                 android:text="@string/signIn"
                 app:spinning_bar_color="#FFF"
-                app:spinning_bar_padding="6dp"
-                app:spinning_bar_width="2dp"></br.com.simplepass.loading_button_lib.customViews.CircularProgressButton>
+                app:spinning_bar_padding="4dp"
+                app:spinning_bar_width="2dp"></br.com.simplepass.loadingbutton.customViews.CircularProgressButton>
+
         </LinearLayout>
 
     </LinearLayout>
