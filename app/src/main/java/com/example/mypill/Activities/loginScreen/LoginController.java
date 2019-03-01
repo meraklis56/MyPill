@@ -1,10 +1,7 @@
 package com.example.mypill.Activities.loginScreen;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.example.mypill.Activities.utils.GlobalApplication;
-import com.example.mypill.R;
+import com.example.mypill.Activities.utils.AuthenticationHandler;
 
 import java.util.Arrays;
 
@@ -24,21 +21,7 @@ import java.util.Arrays;
 
 public class LoginController {
 
-    Context context = GlobalApplication.getAppContext();
-    SharedPreferences.Editor editor;
-
     public boolean login(char[] username, char[] password) {
-        char[] expectedUsername = context.getResources().getString(R.string.usernameLogin).toCharArray();
-        char[] expectedPassword = context.getResources().getString(R.string.passwordLogin).toCharArray();
-
-        if (Arrays.equals(username, expectedUsername) && Arrays.equals(password, expectedPassword)) {
-            // Save the logged status into SharedPreferences
-            editor = context.getSharedPreferences("mySharedPrefs", Context.MODE_PRIVATE).edit();
-            editor.putBoolean("loggedIn", true);
-            editor.apply();
-            return true;
-        } else {
-            return false;
-        }
+        return AuthenticationHandler.getInstance().Login(username, password);
     }
 }

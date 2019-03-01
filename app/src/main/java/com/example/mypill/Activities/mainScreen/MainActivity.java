@@ -1,7 +1,6 @@
 package com.example.mypill.Activities.mainScreen;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,9 +10,12 @@ import android.widget.Toast;
 
 import com.example.mypill.Activities.loginScreen.LoginActivity;
 import com.example.mypill.Activities.utils.AlarmsManager;
+import com.example.mypill.Activities.utils.AuthenticationHandler;
 import com.example.mypill.R;
+import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 /*
     This class, when it is executed for the first time, it is responsible
@@ -37,17 +39,31 @@ public class MainActivity extends AppCompatActivity {
         alarmsManager.setMainAlarm();
         // Always set alarm.
 
-//        new Handler().post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        new DataHandler().getEntries(5).forEach(entry -> {
-////                            System.out.println(entry.toString());
-//                        });
-//                    }
-//                });
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        // TODO implement tab view
-        // TODO implement fragments
+        SampleAdapter sampleAdapter = new SampleAdapter(getSupportFragmentManager());
+
+        viewPager.setAdapter(sampleAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                System.out.println("TAB SELECTED");
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
     }
 
     @Override
@@ -69,10 +85,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //
     private void Logout() {
-        SharedPreferences prefs = getSharedPreferences("mySharedPrefs", MODE_PRIVATE);
-        prefs.edit().remove("loggedIn").apply();
-        Toast.makeText(getBaseContext(), getString(R.string.logOutToast), Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(this, LoginActivity.class));
+        if (AuthenticationHandler.getInstance().Logout()) {
+            Toast.makeText(getApplicationContext(), getString(R.string.logOutCorrectToast), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            Toast.makeText(getApplicationContext(), getString(R.string.logOutFalseToast), Toast.LENGTH_SHORT).show();
+        }
     }
+
 }
