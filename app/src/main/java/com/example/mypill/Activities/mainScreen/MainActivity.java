@@ -27,7 +27,6 @@ import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button setAlarmButton, cancelAlarmButton;
     private AlarmsManager alarmsManager;
 
     @Override
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         alarmsManager = new AlarmsManager();
         alarmsManager.setMainAlarm();
-        // Always set alarm.
+        // Always set alarm
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -63,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
@@ -75,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.logoutOption:
                 Logout();
@@ -85,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //
     private void Logout() {
         if (AuthenticationHandler.getInstance().Logout()) {
             Toast.makeText(getApplicationContext(), getString(R.string.logOutCorrectToast), Toast.LENGTH_SHORT).show();

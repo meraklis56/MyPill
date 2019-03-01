@@ -1,9 +1,6 @@
 package com.example.mypill.Activities.mainScreen;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +8,22 @@ import android.widget.TextView;
 
 import com.example.mypill.R;
 
+import androidx.fragment.app.Fragment;
 
-public class ListFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class GraphFragment extends Fragment {
+    private static final String ARG_PARAM1 = "title";
+    private static final String ARG_PARAM2 = "index";
 
-    private String mParam1;
-    private String mParam2;
+    private String tabTitle;
+    private int tabIndex;
 
-    public ListFragment() { }
+    public GraphFragment() { }
 
-    // TODO: Rename and change types and number of parameters
-    public static ListFragment newInstance(String param1, String param2) {
-        ListFragment fragment = new ListFragment();
+    public static GraphFragment newInstance(String param1, int param2) {
+        GraphFragment fragment = new GraphFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,20 +33,19 @@ public class ListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            tabTitle = getArguments().getString(ARG_PARAM1);
+            tabIndex = getArguments().getInt(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_graph, container, false);
 
         // Inflate the layout for this fragment
         TextView textView = (TextView) view.findViewById(R.id.testTextView);
-        textView.setText("TAB:" + mParam1);
+        textView.setText("TAB: " + tabIndex);
         return view;
     }
-
 }
