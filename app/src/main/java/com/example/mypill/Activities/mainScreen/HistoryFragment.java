@@ -5,12 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.mypill.Activities.data.LocalDBHandler;
 import com.example.mypill.Activities.utils.GlobalApplication;
@@ -54,14 +54,16 @@ public class HistoryFragment extends Fragment {
         // Get access to the underlying readable database as no editing will be allowed
         SQLiteDatabase db = handler.getReadableDatabase();
         // Query for items from the database and get a cursor back
-        Cursor historyActionCursor = db.rawQuery("SELECT * FROM entries order by _id desc limit 10", null);
+        Cursor historyActionCursor = db.rawQuery("SELECT * FROM entries WHERE action!=\"snooze\" order by _id desc limit 10", null);
 
-        // Find ListView to populate
-        ListView actionHistoryListView = (ListView) view.findViewById(R.id.actionHistoryListView);
-        // Setup cursor adapter using cursor from last step
-        ActionsAdapter todoAdapter = new ActionsAdapter(GlobalApplication.getAppContext(), historyActionCursor);
-        // Attach cursor adapter to the ListView
-        actionHistoryListView.setAdapter(todoAdapter);
+        // Find recycleView to populate
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+        // use a linear layout manager
+        recyclerView.setLayoutManager(new LinearLayoutManager(GlobalApplication.getAppContext()));
+
+        // specify an adapter
+        ActionsRecycleViewAdapter mAdapter = new ActionsRecycleViewAdapter(GlobalApplication.getAppContext(), historyActionCursor);
+        recyclerView.setAdapter(mAdapter);
 
         return view;
     }

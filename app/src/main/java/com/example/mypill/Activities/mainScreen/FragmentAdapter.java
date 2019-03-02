@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-public class SampleAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentPagerAdapter {
 
-    public SampleAdapter(FragmentManager fragmentManager) {
+    public FragmentAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
     }
 

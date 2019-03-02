@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.mypill.Activities.loginScreen.LoginActivity;
@@ -41,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
 
-        SampleAdapter sampleAdapter = new SampleAdapter(getSupportFragmentManager());
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 
-        viewPager.setAdapter(sampleAdapter);
+        viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

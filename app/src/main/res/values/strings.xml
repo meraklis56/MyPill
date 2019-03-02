@@ -9,7 +9,7 @@
     <string name="forgotPill">I Forgot it</string>
     <string name="snooze">Snooze 30 min</string>
     <string name="notificationTitle">It\'s time</string>
-    <string name="notificationText">Take your drug</string>
+    <string name="notificationText">Ingest your drug</string>
     <string name="snoozeToast">Snoozed for 30 min</string>
     <string name="pillTaken">You will be notified in 30 minutes</string>
     <string name="pillForgoten">Shame!!</string>
@@ -19,4 +19,7 @@
     <string name="logOutFalseToast">An error occurred logging out</string>
     <string name="logout">Log out</string>
     <string name="wrongLogin">Wrong username/password</string>
+    <string name="pillIngestedAction">Ingested</string>
+    <string name="pillSnoozedAction">Ingestion postponed</string>
+    <string name="pillForgottenAction">Forgotten</string>
 </resources>

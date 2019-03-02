@@ -1,11 +1,9 @@
 package com.example.mypill.Activities.loginScreen;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -96,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
                 signInButton.startAnimation();
                 char[] username = usernameTextView.getText().toString().toCharArray();
                 char[] password = passwordTextView.getText().toString().toCharArray();
