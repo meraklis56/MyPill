@@ -17,8 +17,6 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             return HistoryFragment.newInstance("History", 1);
         } else if (position == 1) {
             return GraphFragment.newInstance("Graph", 2);
-        } else if (position == 2) {
-            return HistoryFragment.newInstance("Null", 3);
         } else {
             return null;
         }
@@ -28,11 +26,9 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return "History";
+            return "List";
         } else if (position == 1) {
-            return "Graph";
-        } else if (position == 2) {
-            return "Tab 2 Item";
+            return "Calendar";
         } else {
             return "";
         }
@@ -40,6 +36,6 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             FirebaseAuth.getInstance().signOut();
             Toast.makeText(getApplicationContext(), getString(R.string.logOutCorrectToast), Toast.LENGTH_SHORT).show();
+            AlarmsManager alarmsManager = new AlarmsManager();
+            alarmsManager.cancelAlarm();
             startActivity(new Intent(this, LoginActivity.class));
         } catch (Exception e){
             Toast.makeText(getApplicationContext(), getString(R.string.logOutFalseToast), Toast.LENGTH_SHORT).show();
