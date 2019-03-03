@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.mypill.Activities.interfaces.DBHandlerInterface;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 
@@ -97,5 +98,36 @@ public class LocalDBHandler extends SQLiteOpenHelper implements DBHandlerInterfa
         }
 
         return entries;
+    }
+
+    public ArrayList<String[]> getTotalEntries() {
+        ArrayList<String[]> totalEntries = new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String takenSelectQuery = "SELECT Count(*) FROM entries WHERE action=\"taken\"";
+        Cursor takenCursor = db.rawQuery(takenSelectQuery, null);
+
+        while (takenCursor.moveToNext()) {
+            int total = takenCursor.getInt(takenCursor.getColumnIndexOrThrow("Count(*)"));
+            String[] takenArray = new String[2];
+            takenArray[0] = "taken";
+            takenArray[1] = String.valueOf(total);
+            totalEntries.add(takenArray);
+        }
+
+        db = getReadableDatabase();
+        String forgottenSelectQuery = "SELECT Count(*) FROM entries WHERE action=\"forgotten\"";
+        Cursor forgottenSelectQueryCursor = db.rawQuery(forgottenSelectQuery, null);
+
+        while (forgottenSelectQueryCursor.moveToNext()) {
+            int total = forgottenSelectQueryCursor.getInt(takenCursor.getColumnIndexOrThrow("Count(*)"));
+            String[] forgottenArray = new String[2];
+            forgottenArray[0] = "forgotten";
+            forgottenArray[1] = String.valueOf(total);
+            totalEntries.add(forgottenArray);
+        }
+
+        return totalEntries;
     }
 }

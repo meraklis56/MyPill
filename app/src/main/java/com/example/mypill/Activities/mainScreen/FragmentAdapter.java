@@ -14,9 +14,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return HistoryFragment.newInstance("History", 1);
+            return ListFragment.newInstance();
         } else if (position == 1) {
-            return GraphFragment.newInstance("Graph", 2);
+            return CalendarFragment.newInstance();
+        } else if (position == 2) {
+            return GraphFragment.newInstance();
         } else {
             return null;
         }
@@ -29,6 +31,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             return "List";
         } else if (position == 1) {
             return "Calendar";
+        }  else if (position == 2) {
+            return "Graph";
         } else {
             return "";
         }
@@ -36,6 +40,6 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }

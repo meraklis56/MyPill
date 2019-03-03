@@ -16,38 +16,18 @@ import com.example.mypill.Activities.data.LocalDBHandler;
 import com.example.mypill.Activities.utils.GlobalApplication;
 import com.example.mypill.R;
 
-public class HistoryFragment extends Fragment {
-    private static final String ARG_PARAM1 = "title";
-    private static final String ARG_PARAM2 = "index";
+public class ListFragment extends Fragment {
 
-    private String tabTitle;
-    private int tabIndex;
+    public ListFragment() { }
 
-    public HistoryFragment() { }
-
-    public static HistoryFragment newInstance(String param1, int param2) {
-        HistoryFragment fragment = new HistoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putInt(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            tabTitle = getArguments().getString(ARG_PARAM1);
-            tabIndex = getArguments().getInt(ARG_PARAM2);
-        }
+    public static ListFragment newInstance() {
+        return new ListFragment();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         // get the SQLiteOpenHelper class connecting to my DB
         LocalDBHandler handler = new LocalDBHandler(GlobalApplication.getAppContext());

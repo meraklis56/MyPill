@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme"
         android:name=".Activities.utils.GlobalApplication">
 
-        <activity android:name=".Activities.mainScreen.MainActivity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar"></activity>
+        <activity android:name=".Activities.mainScreen.MainActivity"></activity>
         <activity android:name=".Activities.loginScreen.LoginActivity" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
