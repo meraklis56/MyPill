@@ -2,6 +2,7 @@ package com.example.mypill.Activities.mainScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -9,9 +10,9 @@ import android.widget.Toast;
 
 import com.example.mypill.Activities.loginScreen.LoginActivity;
 import com.example.mypill.Activities.utils.AlarmsManager;
-import com.example.mypill.Activities.utils.AuthenticationHandler;
 import com.example.mypill.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -82,11 +83,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Logout() {
-        if (AuthenticationHandler.getInstance().Logout()) {
+
+        try {
+            FirebaseAuth.getInstance().signOut();
             Toast.makeText(getApplicationContext(), getString(R.string.logOutCorrectToast), Toast.LENGTH_SHORT).show();
             startActivity(new Intent(this, LoginActivity.class));
-        } else {
+        } catch (Exception e){
             Toast.makeText(getApplicationContext(), getString(R.string.logOutFalseToast), Toast.LENGTH_SHORT).show();
+            Log.e("FirebaseSDK", e.getMessage());
         }
     }
 

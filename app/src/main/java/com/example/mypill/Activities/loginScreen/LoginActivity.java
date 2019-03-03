@@ -2,7 +2,6 @@ package com.example.mypill.Activities.loginScreen;
 
 import android.animation.Animator;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,13 +17,18 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.mypill.Activities.mainScreen.MainActivity;
 import com.example.mypill.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.concurrent.CompletableFuture;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
+
+import static com.firebase.ui.auth.ui.phone.SubmitConfirmationCodeFragment.TAG;
 
 /*
     This is the View component of Login procedure. It is responsible to
@@ -40,14 +44,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private Intent mainActivityIntent;
 
-    private LoginController loginController;
-    private SharedPreferences prefs;
     private LottieAnimationView animationView;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
 
         // Login components initialization
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
@@ -57,10 +63,8 @@ public class LoginActivity extends AppCompatActivity {
         // next activity initialization
         mainActivityIntent = new Intent(this, MainActivity.class);
 
-        loginController = new LoginController();
-
-        prefs = getSharedPreferences("mySharedPrefs", MODE_PRIVATE);
-        if (prefs.getBoolean("loggedIn", false)) {
+        // Check if the user is logged in
+        if (mAuth.getCurrentUser() != null){
             startActivity(mainActivityIntent);
         }
 
@@ -68,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
         // Lottie, a library which enables the export of animation from AE
         // into a json file and then animating natively in Android
         animationView = (LottieAnimationView) findViewById(R.id.logoHolder);
-
         animationView.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -94,51 +97,47 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
                 signInButton.startAnimation();
-                char[] username = usernameTextView.getText().toString().toCharArray();
-                char[] password = passwordTextView.getText().toString().toCharArray();
-                CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
-                    boolean result = loginController.login(username, password);
-                    System.out.println("username: " + username);
-                    System.out.println("password: " + password);
-                    return result;
-                });
+                String username = usernameTextView.getText().toString();
+                String password = passwordTextView.getText().toString();
 
-                try {
-                    boolean result = future.get();
-                    Log.i("Login()", "" + result);
-                    if (result) {
-                        Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
+                // Using firebase as a Login handler
+                mAuth.signInWithEmailAndPassword(username, password)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
-                            public void run() {
-                                signInButton.doneLoadingAnimation(Color.parseColor("#0288D1"), drawableToBitmap(getDrawable(R.drawable.check)));
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            signInButton.doneLoadingAnimation(Color.parseColor("#0288D1"), drawableToBitmap(getDrawable(R.drawable.check)));
 
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivity(mainActivityIntent);
-                                    }
-                                }, 1000);
+                                            new Handler().postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    startActivity(mainActivityIntent);
+                                                }
+                                            }, 1000);
+                                        }
+                                    }, 1000);
+                                } else {
+                                    Log.w(TAG, "firebaseSDK", task.getException());
+                                    Toast.makeText(getBaseContext(),getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
+                                    new Handler().postDelayed(new Runnable() {
+                                        public void run() {
+                                            Toast.makeText(getBaseContext(),getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
+                                            signInButton.revertAnimation(new Function0<Unit>() {
+                                                @Override
+                                                public Unit invoke() {
+                                                    return null;
+                                                }
+                                            });
+                                        }
+                                    }, 1000);
+                                }
                             }
-                        }, 1000);
-                    } else {
-                        new Handler().postDelayed(new Runnable() {
-                            public void run() {
-                                Toast.makeText(getBaseContext(),getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
-                                signInButton.revertAnimation(new Function0<Unit>() {
-                                    @Override
-                                    public Unit invoke() {
-                                        return null;
-                                    }
-                                });
-                            }
-                        }, 1000);
-                    }
-                } catch (Exception e) {
-                    Log.e("LoginActivity", e.getMessage());
-                }
+                        });
             }});
     }
 
