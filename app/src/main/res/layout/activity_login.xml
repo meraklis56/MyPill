@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="@string/signIn"
-                app:spinning_bar_color="#FFF"
+                app:spinning_bar_color="@color/colorAccent"
                 app:spinning_bar_padding="4dp"
                 app:spinning_bar_width="2dp"></br.com.simplepass.loadingbutton.customViews.CircularProgressButton>
 

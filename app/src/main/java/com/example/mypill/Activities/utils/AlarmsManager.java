@@ -51,7 +51,7 @@ public class AlarmsManager {
 
             // For testing reasons this is repeated approximately every 10 seconds
             // Due to Android's doze settings, it could be more
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis(),1000 * 120, pendingIntent);
+            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  calendar.getTimeInMillis(),24 * 60 * 60 * 1000, pendingIntent);
             Log.i("AlarmsManager", "Alarm was set at 5 am");
             return true;
         } catch (Exception e) {
@@ -71,7 +71,7 @@ public class AlarmsManager {
                 intent2.putExtra("NOTIFICATION", "SECONDARY");
                 PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context.getApplicationContext(), 2, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
                 alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,SystemClock.elapsedRealtime() +
-                                10 * 1000, pendingIntent2);
+                                60 * 1000 * 30, pendingIntent2);
                 Log.i("AlarmsManager", "Secondary Alarm, to intake pill");
             } else if (action.equals("SNOOZE_MAIN_NOTIFICATION")) {
 
@@ -79,7 +79,7 @@ public class AlarmsManager {
                 intent2.putExtra("NOTIFICATION", "MAIN");
                 PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context.getApplicationContext(), 2, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
                 alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,SystemClock.elapsedRealtime() +
-                        10 * 1000 * 1, pendingIntent2);
+                        60 * 1000 * 30, pendingIntent2);
                 Log.i("AlarmsManager", "Secondary Alarm, to notify to eat");
             }
 

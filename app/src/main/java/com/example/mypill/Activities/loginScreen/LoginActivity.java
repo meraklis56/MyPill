@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameTextView = (TextView) findViewById(R.id.usernameTextView);
         passwordTextView = (TextView) findViewById(R.id.passwordTextView);
         CircularProgressButton signInButton = (CircularProgressButton) findViewById(R.id.signInButton);
+//        signInButton.setBackgroundColor(getColor(R.color.colorPrimaryDark));
 
         // next activity initialization
         mainActivityIntent = new Intent(this, MainActivity.class);
@@ -97,47 +98,53 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                signInButton.startAnimation();
                 String username = usernameTextView.getText().toString();
                 String password = passwordTextView.getText().toString();
 
-                // Using firebase as a Login handler
-                mAuth.signInWithEmailAndPassword(username, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            signInButton.doneLoadingAnimation(Color.parseColor("#0288D1"), drawableToBitmap(getDrawable(R.drawable.check)));
+                if (username.length() > 0 && password.length() > 0) {
+                    signInButton.startAnimation();
 
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    startActivity(mainActivityIntent);
-                                                }
-                                            }, 1000);
-                                        }
-                                    }, 1000);
-                                } else {
-                                    Log.w(TAG, "firebaseSDK", task.getException());
-                                    Toast.makeText(getBaseContext(),getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
-                                    new Handler().postDelayed(new Runnable() {
-                                        public void run() {
-                                            Toast.makeText(getBaseContext(),getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
-                                            signInButton.revertAnimation(new Function0<Unit>() {
-                                                @Override
-                                                public Unit invoke() {
-                                                    return null;
-                                                }
-                                            });
-                                        }
-                                    }, 1000);
+                    // Using firebase as a Login handler
+                    mAuth.signInWithEmailAndPassword(username, password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                signInButton.doneLoadingAnimation(getColor(R.color.colorAccent), drawableToBitmap(getDrawable(R.drawable.check)));
+
+                                                new Handler().postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        startActivity(mainActivityIntent);
+                                                    }
+                                                }, 1000);
+                                            }
+                                        }, 1000);
+                                    } else {
+                                        Log.w(TAG, "firebaseSDK", task.getException());
+                                        Toast.makeText(getBaseContext(), getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
+                                        new Handler().postDelayed(new Runnable() {
+                                            public void run() {
+                                                Toast.makeText(getBaseContext(), getString(R.string.wrongLogin), Toast.LENGTH_SHORT).show();
+                                                signInButton.revertAnimation(new Function0<Unit>() {
+                                                    @Override
+                                                    public Unit invoke() {
+                                                        return null;
+                                                    }
+                                                });
+                                            }
+                                        }, 1000);
+                                    }
                                 }
-                            }
-                        });
+                            });
+                } else {
+                    Toast.makeText(getBaseContext(), getString(R.string.emptyCredentials), Toast.LENGTH_SHORT).show();
+                }
+
             }});
     }
 

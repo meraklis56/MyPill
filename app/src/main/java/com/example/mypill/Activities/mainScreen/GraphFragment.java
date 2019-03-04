@@ -11,10 +11,16 @@ import com.example.mypill.Activities.utils.GlobalApplication;
 import com.example.mypill.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +41,10 @@ public class GraphFragment extends Fragment {
 
         // in this example, a LineChart is initialized from xml
         PieChart chart = (PieChart) view.findViewById(R.id.pieChart);
+        chart.getDescription().setText("");
+//        chart.getDescription().setTextSize(12);
+//        chart.getDescription().setPosition(190f,40f);
+        chart.getLegend().setEnabled(false);
 
         List<PieEntry> entries = new ArrayList<>();
 
@@ -43,18 +53,32 @@ public class GraphFragment extends Fragment {
 
         ArrayList<String[]> data = handler.getTotalEntries();
 
-        PieEntry pieEntry = new PieEntry(Integer.parseInt(data.get(0)[1]), data.get(0)[0]);
-        entries.add(pieEntry);
+        if (data.size() > 1) {
+            PieEntry ingestedEntry = new PieEntry(Integer.parseInt(data.get(0)[1]), data.get(0)[0]);
+            entries.add(ingestedEntry);
 
-        PieEntry pieEntry2 = new PieEntry(Integer.parseInt(data.get(1)[1]), data.get(1)[0]);
-        entries.add(pieEntry2);
+            PieEntry forgottenEntry = new PieEntry(Integer.parseInt(data.get(1)[1]), data.get(1)[0]);
+            entries.add(forgottenEntry);
+        }
 
 
-        PieDataSet dataSet1 = new PieDataSet(entries , "myLabel1");
-        dataSet1.setColors(ColorTemplate.COLORFUL_COLORS);
-        dataSet1.setValueTextColor(Color.BLUE);
+        PieDataSet dataSet = new PieDataSet(entries , "");
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueTextSize(18f);
+        dataSet.setSliceSpace(8);
 
-        PieData pieData = new PieData(dataSet1);
+        // to remove any decimal points
+        IValueFormatter formatter = new IValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+                return String.format("%.0f", value);
+            }
+
+        };
+        dataSet.setValueFormatter(formatter);
+
+        PieData pieData = new PieData(dataSet);
 
         chart.setData(pieData);
         chart.animateY(500);

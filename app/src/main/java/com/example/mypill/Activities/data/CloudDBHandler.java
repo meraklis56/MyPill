@@ -40,7 +40,11 @@ public class CloudDBHandler implements DBHandlerInterface {
     public CloudDBHandler() {
         FirebaseApp.initializeApp(context);
         database = FirebaseDatabase.getInstance();
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        try {
+            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        } catch (Exception e) {
+            Log.e("CloudDB", e.getMessage());
+        }
     }
 
     public boolean addEntry(Entry entry) {
@@ -64,6 +68,8 @@ public class CloudDBHandler implements DBHandlerInterface {
     }
 
     public ArrayList<Entry> getEntries(int limiter) {
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         myRef = database.getReference("/Actions");
         myRef.addValueEventListener(new ValueEventListener() {
 

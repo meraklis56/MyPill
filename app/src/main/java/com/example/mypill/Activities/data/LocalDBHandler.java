@@ -105,27 +105,22 @@ public class LocalDBHandler extends SQLiteOpenHelper implements DBHandlerInterfa
 
         SQLiteDatabase db = getReadableDatabase();
 
-        String takenSelectQuery = "SELECT Count(*) FROM entries WHERE action=\"taken\"";
-        Cursor takenCursor = db.rawQuery(takenSelectQuery, null);
+        String totalSelectQuery = "SELECT Count(*) AS Total FROM entries WHERE action=\"forgotten\" UNION\n" +
+                "SELECT Count(*) AS Total FROM entries WHERE action=\"taken\"";
+        Cursor totalCursor = db.rawQuery(totalSelectQuery, null);
 
-        while (takenCursor.moveToNext()) {
-            int total = takenCursor.getInt(takenCursor.getColumnIndexOrThrow("Count(*)"));
-            String[] takenArray = new String[2];
-            takenArray[0] = "taken";
-            takenArray[1] = String.valueOf(total);
-            totalEntries.add(takenArray);
-        }
+        while (totalCursor.moveToNext()) {
+            int total = totalCursor.getInt(totalCursor.getColumnIndexOrThrow("Total"));
+            System.out.println(totalCursor.getPosition());
+            String[] tempArray = new String[2];
+            tempArray[1] = String.valueOf(total);
 
-        db = getReadableDatabase();
-        String forgottenSelectQuery = "SELECT Count(*) FROM entries WHERE action=\"forgotten\"";
-        Cursor forgottenSelectQueryCursor = db.rawQuery(forgottenSelectQuery, null);
-
-        while (forgottenSelectQueryCursor.moveToNext()) {
-            int total = forgottenSelectQueryCursor.getInt(takenCursor.getColumnIndexOrThrow("Count(*)"));
-            String[] forgottenArray = new String[2];
-            forgottenArray[0] = "forgotten";
-            forgottenArray[1] = String.valueOf(total);
-            totalEntries.add(forgottenArray);
+            if (totalCursor.getPosition() == 0) {
+                tempArray[0] = "Forgotten";
+            } else if (totalCursor.getPosition() == 1) {
+                tempArray[0] = "Ingested";
+            }
+            totalEntries.add(tempArray);
         }
 
         return totalEntries;
