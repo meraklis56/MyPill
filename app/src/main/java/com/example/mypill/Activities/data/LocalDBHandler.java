@@ -125,4 +125,9 @@ public class LocalDBHandler extends SQLiteOpenHelper implements DBHandlerInterfa
 
         return totalEntries;
     }
+
+    public void ClearDatabase() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS " + FeedEntry.TABLE_NAME);
+    }
 }

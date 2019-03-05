@@ -23,4 +23,28 @@
     <string name="pillIngestedAction">Ingested</string>
     <string name="pillSnoozedAction">Ingestion postponed</string>
     <string name="pillForgottenAction">Forgotten</string>
+    <string-array name="ingestYourPillTitle">
+        <item name="message1">It\'s time!</item>
+        <item>Godmorn!!</item>
+        <item>Καλημέρα. Ώρα για το χάπι!</item>
+        <item>Καλημέρα. Πάρε νερό και το χάπι</item>
+        <item>Your pill is digested</item>
+        <item>Hee ho! Go to the fridge</item>
+        <item>Yo! Time is up</item>
+        <item>Πεινάλα, τώρα μπορείς</item>
+        <item>Νηστικό αρκούδι...πήγαινε να φας</item>
+    </string-array>
+    <string-array name="ingestYourPillText">
+        <item>Lady, you can eat anything you want 🍞</item>
+        <item>Η ώρα της επιδρομής στο ψυγείο έφτασε</item>
+        <item>Λένε πως έχεις ρέντα αν φας μερέντα</item>
+    </string-array>
+    <string-array name="forgotPill">
+        <item>Αλήθεια;😢</item>
+        <item>Ντροπή!</item>
+        <item>Πάλι;</item>
+        <item>Αποστολή γεγονότος στο sydhavn...</item>
+        <item>Μην το ξανα-ξεχάσεις 😊</item>
+        <item>Πρόσεχε την υγεία σου 😊</item>
+    </string-array>
 </resources>

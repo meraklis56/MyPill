@@ -9,6 +9,8 @@ import android.widget.Toast;
 import com.example.mypill.Activities.data.DataHandler;
 import com.example.mypill.R;
 
+import java.util.Random;
+
 /*
     This is the class responsible to handle user's clicks on the two main buttons
     of notification
@@ -73,7 +75,8 @@ public class ActionsIntentService extends IntentService {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(getApplicationContext(), (String)getString(R.string.pillForgoten), Toast.LENGTH_LONG).show();
+                String[] forgottenArray = GlobalApplication.getAppContext().getResources().getStringArray(R.array.forgotPill);
+                Toast.makeText(getApplicationContext(), forgottenArray[new Random().nextInt(forgottenArray.length)], Toast.LENGTH_LONG).show();
                 dataHandler.saveEntry(0, "forgotten");
             }
         });

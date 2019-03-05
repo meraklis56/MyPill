@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     private Intent mainActivityIntent;
 
     private LottieAnimationView animationView;
-
     private FirebaseAuth mAuth;
 
     @Override

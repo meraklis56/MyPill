@@ -56,4 +56,8 @@ public class DataHandler {
     public ArrayList<Entry> getEntries(int limitter) {
         return localDB.getEntries(limitter);
     }
+
+    public void clearLocalDB() {
+        localDB.ClearDatabase();
+    }
 }

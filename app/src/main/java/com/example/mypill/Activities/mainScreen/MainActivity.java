@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.mypill.Activities.data.DataHandler;
 import com.example.mypill.Activities.loginScreen.LoginActivity;
 import com.example.mypill.Activities.utils.AlarmsManager;
 import com.example.mypill.R;
@@ -35,8 +36,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         alarmsManager = new AlarmsManager();
-        alarmsManager.setMainAlarm();
-        // Always set alarm
+        if (!alarmsManager.isAlarmSet()) {
+            Log.i("AlarmManager", "Alarm is not set");
+            alarmsManager.setMainAlarm();
+        } else {
+            Log.i("AlarmManager", "Alarm is set");
+        }
+        // Set alarm only if it is not set
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -89,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), getString(R.string.logOutCorrectToast), Toast.LENGTH_SHORT).show();
             AlarmsManager alarmsManager = new AlarmsManager();
             alarmsManager.cancelAlarm();
+            DataHandler dh = new DataHandler();
+            dh.clearLocalDB();
             startActivity(new Intent(this, LoginActivity.class));
         } catch (Exception e){
             Toast.makeText(getApplicationContext(), getString(R.string.logOutFalseToast), Toast.LENGTH_SHORT).show();

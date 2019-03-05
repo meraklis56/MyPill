@@ -13,6 +13,8 @@ import com.example.mypill.R;
 import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
 
+import java.util.Random;
+
 /*
     This class is responsible to create the two types of notification:
     1. Main Notification (Reminder to take your pill with 2 actions)
@@ -79,16 +81,22 @@ public class CreateNotificationIntentService extends JobIntentService {
                 .build();
         // TODO create different text and titles and randomize them
 
+        // To place the notification on top and force to be in extended view
+        notification.priority = Notification.PRIORITY_MAX;
+
         // Show the notification.
         mNotificationManager.notify(1, notification);
     }
 
     public void createSecondaryNotification() {
 
+        String[] titlesArray = context.getResources().getStringArray(R.array.ingestYourPillTitle);
+        String[] textArray = context.getResources().getStringArray(R.array.ingestYourPillText);
+
         // Build Notification with NotificationCompat.Builder
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle(getString(R.string.pillDigestedNotificationTitle))   //Set the title of Notification
-                .setContentText(getString(R.string.pillDigestedNotificationText))    //Set the text for notification
+                .setContentTitle(titlesArray[new Random().nextInt(titlesArray.length)])   //Set the title of Notification
+                .setContentText(textArray[new Random().nextInt(textArray.length)])    //Set the text for notification
                 .setSmallIcon(R.drawable.notification_logo) //Set the icon
                 .setColorized(true)
                 .setAutoCancel(true)

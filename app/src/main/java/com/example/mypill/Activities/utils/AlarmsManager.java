@@ -100,4 +100,13 @@ public class AlarmsManager {
             return false;
         }
     }
+
+    public boolean isAlarmSet() {
+        intent = new Intent(context.getApplicationContext(), MyBroadcastReceiver.class);
+        intent.putExtra("NOTIFICATION", "MAIN");
+        pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        return (PendingIntent.getBroadcast(context.getApplicationContext(), 1,
+                intent, PendingIntent.FLAG_NO_CREATE) != null);
+    }
 }
