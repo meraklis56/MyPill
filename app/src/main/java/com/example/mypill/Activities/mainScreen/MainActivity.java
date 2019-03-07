@@ -36,13 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         alarmsManager = new AlarmsManager();
-        if (!alarmsManager.isAlarmSet()) {
-            Log.i("AlarmManager", "Alarm is not set");
-            alarmsManager.setMainAlarm();
-        } else {
-            Log.i("AlarmManager", "Alarm is set");
-        }
-        // Set alarm only if it is not set
+        alarmsManager.setMainAlarm();
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);

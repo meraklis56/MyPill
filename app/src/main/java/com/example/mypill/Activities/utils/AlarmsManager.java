@@ -48,6 +48,9 @@ public class AlarmsManager {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
             calendar.set(Calendar.HOUR_OF_DAY, 5);
+            if (System.currentTimeMillis() > calendar.getTimeInMillis()){
+                calendar.setTimeInMillis(calendar.getTimeInMillis() + 24*60*60*1000);
+            } // If the time has passed, set the alarm tomorrow
 
             // For testing reasons this is repeated approximately every 10 seconds
             // Due to Android's doze settings, it could be more

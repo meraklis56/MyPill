@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 
 import com.example.mypill.R;
@@ -111,9 +112,11 @@ public class CreateNotificationIntentService extends JobIntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel only if it is not already created
             if (notificationManager.getNotificationChannel(CHANNEL_ID) == null) {
-                notificationManager.createNotificationChannel(new NotificationChannel(
+                NotificationChannel notificationChannel = new NotificationChannel(
                         CHANNEL_ID, "Alarm Sound", NotificationManager.IMPORTANCE_DEFAULT
-                ));
+                );
+                notificationChannel.setLightColor(Color.RED);
+                notificationManager.createNotificationChannel(notificationChannel);
             }
         }
     }
