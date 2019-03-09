@@ -55,6 +55,7 @@ public class CalendarFragment extends Fragment {
                     try {
                         cal.setTime(sdf.parse(entry.getTime()));
                         if (entry.getAction().equals("forgotten")) {
+                            cal.add(Calendar.DAY_OF_MONTH, -1);
                             events.add(new EventDay(cal, R.drawable.forget_action));
                         } else if (entry.getAction().equals("taken")) {
                             events.add(new EventDay(cal, R.drawable.intake_action));
