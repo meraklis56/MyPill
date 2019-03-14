@@ -51,11 +51,11 @@ public class CalendarFragment extends Fragment {
             public void run() {
                 new DataHandler().getEntries(30).forEach(entry -> {
                     Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("ss:mm:HH dd-MM-yyyy", Locale.ENGLISH);
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy", Locale.ENGLISH);
                     try {
                         cal.setTime(sdf.parse(entry.getTime()));
+
                         if (entry.getAction().equals("forgotten")) {
-                            cal.add(Calendar.DAY_OF_MONTH, -1);
                             events.add(new EventDay(cal, R.drawable.forget_action));
                         } else if (entry.getAction().equals("taken")) {
                             events.add(new EventDay(cal, R.drawable.intake_action));
@@ -65,6 +65,7 @@ public class CalendarFragment extends Fragment {
                     }
                     calendarView.setEvents(events);
                 });
+                System.out.println(events);
             }
         });
     }
