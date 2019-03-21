@@ -24,26 +24,29 @@
     <string name="pillSnoozedAction">Ingestion postponed</string>
     <string name="pillForgottenAction">Forgotten</string>
     <string-array name="ingestYourPillTitle">
-        <item name="message1">It\'s time!</item>
+        <item>It\'s time!</item>
         <item>Godmorn!!</item>
         <item>Καλημέρα. Ώρα για το χάπι!</item>
-        <item>Καλημέρα. Πάρε νερό και το χάπι</item>
+        <item>Καλημέρα. Πάρε νερό και χάπι</item>
         <item>Your pill is digested</item>
-        <item>Hee ho! Go to the fridge</item>
         <item>Yo! Time is up</item>
-        <item>Πεινάλα, τώρα μπορείς</item>
-        <item>Νηστικό αρκούδι...πήγαινε να φας</item>
+        <item>Σήκω παιδί μου να πάρεις το χάπι(με φωνή κυρίας Ντίνας)</item>
+        <item>Λιεεεν. Έλα κόρη μου να πάρεις το χάπι σου(με φωνή κύριου Χρήστου)</item>
+        <item>Ουι. Λένα πρέπει να πάρεις το χάπι σου(με φωνή Γρηγόρη)</item>
     </string-array>
     <string-array name="ingestYourPillText">
         <item>Lady, you can eat anything you want 🍞</item>
         <item>Η ώρα της επιδρομής στο ψυγείο έφτασε</item>
         <item>Λένε πως έχεις ρέντα αν φας μερέντα</item>
+        <item>Πεινάλα, τώρα μπορείς να φας τον κόσμο</item>
+        <item>Hee ho! Go to the fridge</item>
+        <item>Νηστικό αρκούδι...πήγαινε να φας</item>
     </string-array>
     <string-array name="forgotPill">
         <item>Αλήθεια;😢</item>
         <item>Ντροπή!</item>
         <item>Πάλι;</item>
-        <item>Αποστολή γεγονότος στο sydhavn...</item>
+        <item>Αποστολή γεγονότος προς sydhavn πλευρά...</item>
         <item>Μην το ξανα-ξεχάσεις 😊</item>
         <item>Πρόσεχε την υγεία σου 😊</item>
     </string-array>

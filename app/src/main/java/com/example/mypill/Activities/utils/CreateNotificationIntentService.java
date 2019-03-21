@@ -70,7 +70,7 @@ public class CreateNotificationIntentService extends JobIntentService {
         PendingIntent forgetPendingIntent = PendingIntent.getService(context, 5, forgetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Build Notification with NotificationCompat.Builder
-        Notification notification = new Notification.Builder(this, CHANNEL_ID)
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.notificationTitle))   //Set the title of Notification
                 .setContentText(getString(R.string.notificationText))    //Set the text for notification
                 .setSmallIcon(R.drawable.notification_logo)   //Set the icon
